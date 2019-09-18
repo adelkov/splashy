@@ -1,16 +1,22 @@
 import { Dummy } from "./design-system/primitives";
 import {fetchLatestImages} from './utils/api'
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 
 function App() {
+  const [images, setImages] = useState([])
+
   useEffect(() => {
-    console.log('effect')
-    fetchLatestImages(4).then(res => console.log(res))
+    fetchLatestImages(24).then(res => {
+      setImages(res.data.map(item => item.urls.small))
+    })
   }, []);
 
   return (
     <div className="App">
+      {images && images.map(image => (
+        <img src={image} />
+      ))}
       <Dummy color='adel'> Dummy test</Dummy>
     </div>
   );
