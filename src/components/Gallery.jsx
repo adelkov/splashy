@@ -1,23 +1,16 @@
-import { Dummy } from "../design-system/primitives";
-import {fetchLatestImages} from '../utils/api'
-import React, { useEffect, useState } from 'react';
-
+import React, { useContext } from "react";
+import ImageContext from "../providers/ImagesContext";
 
 function Gallery() {
-  const [images, setImages] = useState([])
 
-  useEffect(() => {
-    fetchLatestImages(24).then(res => {
-      setImages(res.data.map(item => item.urls.small))
-    })
-  }, []);
+  const images = useContext(ImageContext);
 
   return (
     <div>
-      {images && images.map(image => (
-        <img src={image} />
-      ))}
-      <Dummy color='adel'> Dummy test</Dummy>
+      {images &&
+        images.map((image, idx) => (
+          <img src={image} key={image + idx} alt={image} />
+        ))}
     </div>
   );
 }
