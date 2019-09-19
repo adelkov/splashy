@@ -3,17 +3,6 @@ import ImageContext from "../providers/ImagesContext";
 import styled from "styled-components";
 
 function Gallery() {
-  const Image = styled.img`
-    object-fit: cover;
-    transition: transform 400ms ease-out;
-    &:hover {
-      transform: scale(1.15);
-      opacity: .5;
-    }
-    vertical-align: middle;
-    width: 100%;
-  `;
-
   const ImageCard = styled.div`
     cursor: pointer;
     height: fit-content;
@@ -25,29 +14,33 @@ function Gallery() {
       margin-left: 4%;
     }
     position: relative;
-
-    $: click
   `;
-  
 
   const Favo = styled.div`
+    font-family: "Londrina Shadow", cursive;
+    font-size: 60px;
     position: absolute;
     z-index: 100;
-    bottom: 48%;
-    left: 48%;
-
     opacity: 0;
-
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     ${ImageCard}:hover & {
       color: white;
       opacity: 1;
     }
   `;
 
+  const Image = styled.img`
+    object-fit: cover;
+    transition: transform 400ms ease-out;
+    vertical-align: middle;
+    width: 100%;
+  `;
+
   const Column = styled.div`
     flex: 33%;
     max-width: 33%;
-
     @media screen and (max-width: 800px) {
       flex: 100%;
       max-width: 100%;
@@ -63,35 +56,48 @@ function Gallery() {
     }
   `;
 
-  const images = useContext(ImageContext);
-
+  const { images, makeFavorite } = useContext(ImageContext);
   return (
     <Row>
       <Column>
         {images &&
           images.slice(0, 7).map((image, idx) => (
             <ImageCard
-              onClick={() => console.log("like" + image)}
+              onClick={() => !image.isFavorite && makeFavorite(image.url)}
               key={image + idx}
             >
-              <Image src={image} alt={image} />
-              <Favo>Favo</Favo> 
+              <Image src={image.url} alt={image.url} />
+              <Favo>
+                {image.isFavorite ? "Your Favorite!" : "Make Favorite!"}
+              </Favo>
             </ImageCard>
           ))}
       </Column>
       <Column>
         {images &&
           images.slice(8, 15).map((image, idx) => (
-            <ImageCard key={image + idx}>
-              <Image src={image} alt={image} />
+            <ImageCard
+              onClick={() => !image.isFavorite && makeFavorite(image.url)}
+              key={image + idx}
+            >
+              <Image src={image.url} alt={image.url} />
+              <Favo>
+                {image.isFavorite ? "Your Favorite!" : "Make Favorite!"}
+              </Favo>
             </ImageCard>
           ))}
       </Column>
       <Column>
         {images &&
           images.slice(16, 24).map((image, idx) => (
-            <ImageCard key={image + idx}>
-              <Image src={image} alt={image} />
+            <ImageCard
+              onClick={() => !image.isFavorite && makeFavorite(image.url)}
+              key={image.url + idx}
+            >
+              <Image src={image.url} alt={image} />
+              <Favo>
+                {image.isFavorite ? "Your Favorite!" : "Make Favorite!"}
+              </Favo>
             </ImageCard>
           ))}
       </Column>
