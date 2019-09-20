@@ -11,13 +11,13 @@ export const GlobalStyle = createGlobalStyle`
 `;
 
 export const NavLink = styled.div`
-  font-family: "Saira Stencil One", cursive;
+  font-family: "Luckiest Guy", cursive;
   display: inline;
-  padding: 14px;
+  height: 100%;
   ${color}
-  &:hover {
+  // &:hover {
     background-color: yellow;
-  }
+  // }
 `;
 
 export const ImageCard = styled.div`

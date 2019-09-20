@@ -21,7 +21,7 @@ export const ImageProvider = ({ children }) => {
       }));
       setImages(images);
     };
-    // fetchImages();
+    fetchImages();
   }, []);
 
   const searchImage = async query => {

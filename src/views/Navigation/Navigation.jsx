@@ -5,41 +5,43 @@ import { ImageContext } from "../../providers/ImagesProvider";
 import styled from "styled-components";
 import { Heading, NavLink } from "../../design-system/primitives";
 import { color, border } from "styled-system";
+import Search from '../../components/Search'
 
 function Navigation() {
   const { toggleMode, isDark } = useContext(DarkModeContext);
-  const { searchImage } = useContext(ImageContext);
-
-  const [query, setQuery] = useState("");
-  const [tab, setTab] = useState("");
 
   const Toolbar = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 12px;
+    padding: 12px;
     ${color}
   `;
 
+
+
   return (
-    <Toolbar bg={'text'}>
+    <Toolbar bg={"text"}>
       <div>
-        <Link to="/favorites" style={{ textDecoration: "none" }}>
-          <NavLink color={"negtext"} border={1} borderColor={"text"}>
+        <NavLink color={"negtext"} border={1} borderColor={"text"}>
+          <Link
+            to="/favorites"
+            style={{ textDecoration: "none", height: "100%" }}
+          >
             Favorites
-          </NavLink>
-        </Link>
+          </Link>
+        </NavLink>
+
         <Link to="/" style={{ textDecoration: "none" }}>
           <NavLink color={"negtext"}>Gallery</NavLink>
         </Link>
       </div>
-
+      <div>
+       <Search />
+      </div>
       <div onClick={() => toggleMode()}>
         {isDark ? "TOGGLE ME DARK" : "TOGGLE ME LIGHT"}
-      </div>
-      <div>
-        <input type="text" onChange={e => setQuery(e.target.value)} />
-        <div onClick={() => searchImage(query)}> SEARCHHH </div>
       </div>
     </Toolbar>
   );
