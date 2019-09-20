@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Link, Route } from "react-router-dom";
 import Favorites from "./views/Favorites/Favorites";
 import Gallery from "./views/Gallery/Gallery";
 import { ImageProvider } from "./providers/ImagesContext";
-import { fetchLatestImages } from "./utils/api";
+import { fetchLatestImages, fetchSearchedImage } from "./utils/api";
 
 function App() {
   const [images, setImages] = useState([]);
@@ -47,6 +47,14 @@ function App() {
       )
     );
   };
+
+  const searchImage = async query => {
+
+    const {data} = await fetchSearchedImage('dog')
+    console.log(data)
+    setImages([{url: data.urls.small}])
+  }
+  searchImage()
 
   return (
     <Router>
