@@ -1,12 +1,24 @@
 
-
-
-export default {
+const themeLight =  {
     colors: {
-      black: '#000e1a',
+      black: '#fff',
       white: '#fff',
-      blue: '#007ce0',
-      navy: '#004175',
-      adel: '#4444'
+      blue: '#fff',
+      heading: '#303030',
+      background: '#fff'
     },
   }
+
+
+  const themeDark =  {
+    colors: {
+      black: '#000e1a',
+      white: '#000e1a',
+      blue: '#000e1a',
+      heading: '#fff',
+      background: '#303030'
+    },
+  }
+
+  const theme = mode => (mode  ? themeDark : themeLight)
+  export default theme;

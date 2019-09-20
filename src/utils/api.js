@@ -1,4 +1,5 @@
 import axios from "axios";
+import {createUrl} from './utilities'
 
 export const fetchLatestImages = per_page =>
   axios({
@@ -12,14 +13,4 @@ export const fetchSearchedImage = query =>
     url: createUrl({ query }, "random/")
   });
 
-const createUrl = (params = {}, url = "") => {
-  const baseURL = process.env.REACT_APP_SPLASH_BASE_URL;
-  const splashToken = process.env.REACT_APP_SPLASH_TOKEN;
 
-  const paramsWithToken = Object.assign(params, { client_id: splashToken });
-  const urlParams = Object.entries(paramsWithToken)
-    .map(([key, val]) => `${key}=${val}`)
-    .join("&");
-
-  return baseURL + url + "?" + urlParams;
-};

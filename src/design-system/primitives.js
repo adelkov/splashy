@@ -1,12 +1,14 @@
 import styled from "styled-components";
 import { color } from "styled-system";
 
-export const Dummy = styled.div`
-  ${color}
-  &:hover {
-    background: adel;
+import { createGlobalStyle } from 'styled-components'
+
+export const GlobalStyle = createGlobalStyle`
+  body {
+    ${color}
   }
-`;
+`
+
 
 export const ImageCard = styled.div`
   cursor: pointer;
@@ -63,4 +65,5 @@ export const Row = styled.div`
 
 export const Heading = styled.h1`
   font-family: "Londrina Shadow", cursive;
+  ${color}
 `;
