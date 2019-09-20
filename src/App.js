@@ -1,19 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import Favorites from "./components/Favorites";
-import Gallery from "./components/Gallery";
+import { BrowserRouter as Router, Link, Route } from "react-router-dom";
+import Favorites from "./views/Favorites/Favorites";
+import Gallery from "./views/Gallery/Gallery";
 import { ImageProvider } from "./providers/ImagesContext";
 import { fetchLatestImages } from "./utils/api";
 
 function App() {
   const [images, setImages] = useState([]);
+  const [favorites, setFavorites] = useState([]);
   useEffect(() => {
+    setFavorites(JSON.parse(localStorage.getItem("favorites")));
+
     const fetchImages = async () => {
       const { data } = await fetchLatestImages(24);
-      const favorites = localStorage.getItem("favorites");
+      const favorites = JSON.parse(localStorage.getItem("favorites"));
       const images = data.map(image => ({
         url: image.urls.small,
-        isFavorite: favorites && favorites.includes(image.urls.small)
+        isFavorite:
+          favorites &&
+          favorites.find(favorite => favorite.url === image.urls.small)
       }));
       setImages(images);
     };
@@ -21,22 +26,31 @@ function App() {
   }, []);
 
   const makeFavorite = url => {
-    const currentFavorites = localStorage.getItem("favorites");
-    const newFavorites = currentFavorites
-      ? currentFavorites.concat(url)
-      : [url];
-    localStorage.setItem("favorites", newFavorites);
+    let currentFavorites = JSON.parse(localStorage.getItem("favorites"));
+    if (!currentFavorites) {
+      currentFavorites = [];
+    }
 
+    let newFavorites;
+    if (currentFavorites.find(fav => fav.url === url)) {
+      newFavorites = currentFavorites.filter(fav => fav.url !== url);
+    } else {
+      newFavorites = currentFavorites.concat({ url, isFavorite: true });
+    }
+
+    localStorage.setItem("favorites", JSON.stringify(newFavorites));
+
+    setFavorites(newFavorites);
     setImages(
       images.map(image =>
-        image.url === url ? { ...image, isFavorite: true } : image
+        image.url === url ? { ...image, isFavorite: !image.isFavorite } : image
       )
     );
   };
 
   return (
     <Router>
-      <ImageProvider value={{ images, makeFavorite }}>
+      <ImageProvider value={{ images, makeFavorite, favorites }}>
         <div>
           <Link to="/favorites">Favorites </Link>
           <Link to="/">Gallery</Link>
