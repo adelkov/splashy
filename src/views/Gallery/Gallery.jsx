@@ -7,7 +7,6 @@ function Gallery() {
   const { images, makeFavorite } = useContext(ImageContext);
   return (
     <div>
-      <Heading color={"heading"}>The latest images from Splash</Heading>
       <ImageBoard images={images} makeFavorite={makeFavorite} />
     </div>
   );

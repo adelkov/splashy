@@ -8,13 +8,7 @@ import { DarkModeProvider } from "./providers/DarkModeProvider";
 import { GlobalStyle } from "./design-system/primitives";
 
 function App() {
-  // const searchImage = async query => {
 
-  //   const {data} = await fetchSearchedImage('dog')
-  //   console.log(data)
-  //   setImages([{url: data.urls.small}])
-  // }
-  // searchImage()
 
   return (
     <Router>

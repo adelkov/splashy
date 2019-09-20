@@ -1,14 +1,24 @@
 import styled from "styled-components";
-import { color } from "styled-system";
+import { color, border } from "styled-system";
 
-import { createGlobalStyle } from 'styled-components'
+import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
   body {
+    margin: 0;
     ${color}
   }
-`
+`;
 
+export const NavLink = styled.div`
+  font-family: "Saira Stencil One", cursive;
+  display: inline;
+  padding: 14px;
+  ${color}
+  &:hover {
+    background-color: yellow;
+  }
+`;
 
 export const ImageCard = styled.div`
   cursor: pointer;
@@ -65,5 +75,5 @@ export const Row = styled.div`
 
 export const Heading = styled.h1`
   font-family: "Londrina Shadow", cursive;
-  ${color}
+  ${color}heading
 `;

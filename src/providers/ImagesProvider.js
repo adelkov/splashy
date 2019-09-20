@@ -25,6 +25,7 @@ export const ImageProvider = ({ children }) => {
   }, []);
 
   const searchImage = async query => {
+    
     const { data } = await fetchSearchedImage(query);
     setImages([{ url: data.urls.small }]);
   };

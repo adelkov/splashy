@@ -8,7 +8,6 @@ function Favorites() {
   const { favorites, makeFavorite } = useContext(ImageContext);
   return (
     <div>
-      <Heading color={'heading'}>Your favorite images!</Heading>
       <ImageBoard images={favorites} makeFavorite={makeFavorite} />
     </div>
   );
