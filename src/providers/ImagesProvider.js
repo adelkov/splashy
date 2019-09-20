@@ -24,6 +24,11 @@ export const ImageProvider = ({ children }) => {
     // fetchImages();
   }, []);
 
+  const searchImage = async query => {
+    const { data } = await fetchSearchedImage(query);
+    setImages([{ url: data.urls.small }]);
+  };
+
   const makeFavorite = url => {
     let currentFavorites = JSON.parse(localStorage.getItem("favorites"));
     if (!currentFavorites) {
@@ -48,7 +53,7 @@ export const ImageProvider = ({ children }) => {
   };
 
   return (
-    <ImageContext.Provider value={{ images, makeFavorite, favorites }}>
+    <ImageContext.Provider value={{ images, makeFavorite, favorites, searchImage }}>
       {children}
     </ImageContext.Provider>
   );
