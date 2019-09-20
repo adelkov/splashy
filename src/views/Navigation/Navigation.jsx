@@ -1,8 +1,6 @@
 import React, { useContext } from "react";
-import { Heading } from "../../design-system/primitives";
 import { DarkModeContext } from "../../providers/DarkModeProvider";
-import { BrowserRouter as Router, Link, Route } from "react-router-dom";
-import { Dummy } from "../../design-system/primitives";
+import { Link } from "react-router-dom";
 
 function Navigation() {
   const { toggleMode, isDark } = useContext(DarkModeContext);

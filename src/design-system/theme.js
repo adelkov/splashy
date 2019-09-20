@@ -1,11 +1,11 @@
 
 const themeLight =  {
     colors: {
-      black: '#fff',
+      black: '#d5d5d5',
       white: '#fff',
       blue: '#fff',
       heading: '#303030',
-      background: '#fff'
+      background: '#DCDCDC'
     },
   }
 
@@ -15,7 +15,7 @@ const themeLight =  {
       black: '#000e1a',
       white: '#000e1a',
       blue: '#000e1a',
-      heading: '#fff',
+      heading: '#DCDCDC',
       background: '#303030'
     },
   }

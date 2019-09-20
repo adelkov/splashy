@@ -10,7 +10,7 @@ export const DarkModeProvider = ({ children }) => {
   useEffect(() => {
     const initialMode = localStorage.getItem("isDark");
 
-    toggleIsDark(initialMode == "true");
+    toggleIsDark(initialMode === "true");
   }, []);
 
   const toggleMode = () => {
