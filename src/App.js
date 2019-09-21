@@ -1,11 +1,12 @@
 import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { Route, BrowserRouter as Router } from "react-router-dom";
+
+import { GlobalStyle } from "./design-system/primitives";
+import { CustomThemeProvider } from "./providers/CustomThemeProvider";
+import { ImageProvider } from "./providers/ImagesProvider";
 import Favorites from "./views/Favorites/Favorites";
 import Gallery from "./views/Gallery/Gallery";
 import Navigation from "./views/Navigation/Navigation";
-import { ImageProvider } from "./providers/ImagesProvider";
-import { DarkModeProvider } from "./providers/DarkModeProvider";
-import { GlobalStyle } from "./design-system/primitives";
 
 function App() {
 
@@ -13,14 +14,14 @@ function App() {
   return (
     <Router>
       <ImageProvider>
-        <DarkModeProvider>
+        <CustomThemeProvider>
           <>
             <GlobalStyle bg={"background"}/>
             <Navigation />
             <Route path="/" exact component={Gallery} />
             <Route path="/favorites" component={Favorites} />
           </>
-        </DarkModeProvider>
+        </CustomThemeProvider>
       </ImageProvider>
     </Router>
   );

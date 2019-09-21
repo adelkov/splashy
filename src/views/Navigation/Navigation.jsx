@@ -6,10 +6,10 @@ import styled, { css } from "styled-components";
 import { color } from "styled-system";
 
 import Search from "../../components/Search";
-import { DarkModeContext } from "../../providers/DarkModeProvider";
+import { CustomThemeContext } from "../../providers/CustomThemeProvider";
 
 function Navigation() {
-  const { toggleMode, isDark } = useContext(DarkModeContext);
+  const { toggleMode, isDark } = useContext(CustomThemeContext);
 
   const initialTabs = [
     { url: "/", title: "Gallery", selected: true },

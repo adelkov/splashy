@@ -1,10 +1,10 @@
+import theme from "../design-system/theme";
 import React, { useEffect, useState } from "react";
 import { ThemeProvider } from "styled-components";
-import theme from "../design-system/theme";
 
-export const DarkModeContext = React.createContext({});
+export const CustomThemeContext = React.createContext({});
 
-export const DarkModeProvider = ({ children }) => {
+export const CustomThemeProvider = ({ children }) => {
   const [isDark, toggleIsDark] = useState([]);
 
   useEffect(() => {
@@ -19,10 +19,10 @@ export const DarkModeProvider = ({ children }) => {
   };
 
   return (
-    <DarkModeContext.Provider value={{ isDark, toggleMode }}>
+    <CustomThemeContext.Provider value={{ isDark, toggleMode }}>
       <ThemeProvider theme={theme(isDark)}>
         {children}
       </ThemeProvider>
-    </DarkModeContext.Provider>
+    </CustomThemeContext.Provider>
   );
 };
