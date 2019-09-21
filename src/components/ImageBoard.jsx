@@ -4,9 +4,11 @@ import { Column, Favo, Heading, Image, ImageCard, Row } from "../design-system/p
 import { divideImagesToColumns } from "../utils/utilities";
 
 function ImageBoard({ images, makeFavorite }) {
+  console.log(images)
   if (images.length === 0) {
     return <Heading>No images to show! </Heading>;
   }
+  
 
   return (
     <Row>

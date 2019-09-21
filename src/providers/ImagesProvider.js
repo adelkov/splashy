@@ -9,20 +9,20 @@ export const ImageProvider = ({ children }) => {
   const [searchedImage, setSearchedImage] = useState([]);
 
   useEffect(() => {
-    setFavorites(JSON.parse(localStorage.getItem("favorites")));
+    setFavorites(JSON.parse(localStorage.getItem("favorites")) || []);
 
     const fetchImages = async () => {
       const { data } = await fetchLatestImages(24);
-      const favorites = JSON.parse(localStorage.getItem("favorites"));
+      const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
       const images = data.map(image => ({
         url: image.urls.small,
-        isFavorite:
-          favorites &&
-          favorites.find(favorite => favorite.url === image.urls.small)
+        isFavorite: favorites.find(
+          favorite => favorite.url === image.urls.small
+        )
       }));
       setImages(images);
     };
-    // fetchImages();
+    fetchImages();
   }, []);
 
   const searchImage = async query => {
@@ -51,11 +51,16 @@ export const ImageProvider = ({ children }) => {
         image.url === url ? { ...image, isFavorite: !image.isFavorite } : image
       )
     );
-    searchedImage.length === 0 || setSearchedImage([{...searchedImage[0], isFavorite: !searchedImage[0].isFavorite}])
+    searchedImage.length === 0 ||
+      setSearchedImage([
+        { ...searchedImage[0], isFavorite: !searchedImage[0].isFavorite }
+      ]);
   };
 
   return (
-    <ImageContext.Provider value={{ images, makeFavorite, favorites, searchImage, searchedImage }}>
+    <ImageContext.Provider
+      value={{ images, makeFavorite, favorites, searchImage, searchedImage }}
+    >
       {children}
     </ImageContext.Provider>
   );
