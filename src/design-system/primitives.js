@@ -1,23 +1,14 @@
 import styled from "styled-components";
-import { color, border } from "styled-system";
+import { color } from "styled-system";
 
 import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
   body {
+    padding-top: 74px;
     margin: 0;
     ${color}
   }
-`;
-
-export const NavLink = styled.div`
-  font-family: "Luckiest Guy", cursive;
-  display: inline;
-  height: 100%;
-  ${color}
-  // &:hover {
-    background-color: yellow;
-  // }
 `;
 
 export const ImageCard = styled.div`
@@ -37,7 +28,6 @@ export const Favo = styled.div`
   font-family: "Londrina Shadow", cursive;
   font-size: 60px;
   position: absolute;
-  z-index: 100;
   opacity: 0;
   top: 50%;
   left: 50%;

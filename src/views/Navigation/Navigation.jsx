@@ -1,10 +1,12 @@
+import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext, useState } from "react";
-import { DarkModeContext } from "../../providers/DarkModeProvider";
 import { Link } from "react-router-dom";
-import { ImageContext } from "../../providers/ImagesProvider";
 import styled, { css } from "styled-components";
-import { color, border } from "styled-system";
+import { color } from "styled-system";
+
 import Search from "../../components/Search";
+import { DarkModeContext } from "../../providers/DarkModeProvider";
 
 function Navigation() {
   const { toggleMode, isDark } = useContext(DarkModeContext);
@@ -19,38 +21,15 @@ function Navigation() {
     const updatedTabs = tabs.map(tab =>
       tab.url === url ? { ...tab, selected: true } : { ...tab, selected: false }
     );
-    setTabs(updatedTabs)
+    setTabs(updatedTabs);
   };
-
-  const Toolbar = styled.div`
-    overflow: hidden;
-    ${color}
-  `;
-
-  const NavLink = styled.div`
-    font-family: "Luckiest Guy", cursive;
-    float: left;
-    display: block;
-    ${color}
-    text-align: center;
-    text-decoration: none;
-    font-size: 26px;
-    padding: 30px 12px 20px 12px;
-    &:hover {
-      opacity: .4;
-    }
-    ${props =>
-      props.selected &&
-      css`
-        background: palevioletred;
-      `}
-  `;
 
   return (
     <Toolbar bg={"text"}>
       <div>
         {tabs.map(tab => (
           <Link
+            key={tab.url + tab.title}
             to={tab.url}
             style={{ textDecoration: "none" }}
             onClick={() => selectTab(tab.url)}
@@ -61,12 +40,48 @@ function Navigation() {
           </Link>
         ))}
       </div>
-      <Search />
       <div onClick={() => toggleMode()}>
-        {isDark ? "TOGGLE ME DARK" : "TOGGLE ME LIGHT"}
+        {isDark ? (
+          <FontAwesomeIcon icon={faMoon} color={"#303030"} size="2x" />
+        ) : (
+          <FontAwesomeIcon icon={faSun} color={"#dcdcdc"} size="2x" />
+        )}
       </div>
+      <Search />
     </Toolbar>
   );
 }
 
 export default Navigation;
+
+const Toolbar = styled.div`
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 10;
+  height: 60px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  box-shadow: 0.3rem 0.4rem 0.4rem rgba(0, 0, 0, 0.4);
+  ${color}
+`;
+
+const NavLink = styled.div`
+  font-family: "Quicksand", sans-serif;
+
+  // font-family: "Luckiest Guy", cursive;
+  display: inline;
+  font-size: 24px;
+  padding-right: 20px;
+  padding-left: 20px;
+  &:hover {
+    opacity: 0.4;
+  }
+  ${color}
+  ${props =>
+    props.selected &&
+    css`
+      color: palevioletred;
+    `}
+`;
