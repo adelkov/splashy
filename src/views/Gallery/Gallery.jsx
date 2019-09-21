@@ -1,12 +1,14 @@
 import React, { useContext } from "react";
-import { ImageContext } from "../../providers/ImagesProvider";
+
 import ImageBoard from "../../components/ImageBoard";
+import { ImageContext } from "../../providers/ImagesProvider";
 
 function Gallery() {
-  const { images, makeFavorite } = useContext(ImageContext);
+  const { images, makeFavorite, searchedImage } = useContext(ImageContext);
+  const imagesToRender = window.location.pathname === '/search' ? searchedImage : images
   return (
     <div>
-      <ImageBoard images={images} makeFavorite={makeFavorite} />
+      <ImageBoard images={imagesToRender} makeFavorite={makeFavorite} />
     </div>
   );
 }

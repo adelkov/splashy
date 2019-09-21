@@ -1,16 +1,11 @@
 import React from "react";
-import {
-  Favo,
-  ImageCard,
-  Image,
-  Row,
-  Column
-} from "../design-system/primitives";
+
+import { Column, Favo, Heading, Image, ImageCard, Row } from "../design-system/primitives";
 import { divideImagesToColumns } from "../utils/utilities";
 
 function ImageBoard({ images, makeFavorite }) {
-  if (!images) {
-    return <div>No images to show! </div>;
+  if (images.length === 0) {
+    return <Heading>No images to show! </Heading>;
   }
 
   return (

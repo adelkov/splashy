@@ -1,7 +1,7 @@
 import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { Route } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { color } from "styled-system";
 
@@ -9,6 +9,16 @@ import Search from "../../components/Search";
 import { CustomThemeContext } from "../../providers/CustomThemeProvider";
 
 function Navigation() {
+  useEffect(() => {
+    setTabs(
+      tabs.map(tab => (
+        tab.url === window.location.pathname
+          ? { ...tab, selected: true }
+          : { ...tab, selected: false }
+      ))
+    );
+  }, []);
+
   const { toggleMode, isDark } = useContext(CustomThemeContext);
 
   const initialTabs = [
@@ -17,7 +27,8 @@ function Navigation() {
   ];
   const [tabs, setTabs] = useState(initialTabs);
 
-  const selectTab = url => {
+  const selectTab = (url, history) => {
+    history.push(url);
     const updatedTabs = tabs.map(tab =>
       tab.url === url ? { ...tab, selected: true } : { ...tab, selected: false }
     );
@@ -28,16 +39,18 @@ function Navigation() {
     <Toolbar bg={"text"}>
       <div>
         {tabs.map(tab => (
-          <Link
+          <Route
             key={tab.url + tab.title}
-            to={tab.url}
-            style={{ textDecoration: "none" }}
-            onClick={() => selectTab(tab.url)}
-          >
-            <NavLink color={"negtext"} selected={tab.selected}>
-              {tab.title}
-            </NavLink>
-          </Link>
+            render={({ history }) => (
+              <NavLink
+                color={"negtext"}
+                selected={tab.selected}
+                onClick={() => selectTab(tab.url, history)}
+              >
+                {tab.title}
+              </NavLink>
+            )}
+          />
         ))}
       </div>
       <div onClick={() => toggleMode()}>
@@ -69,7 +82,7 @@ const Toolbar = styled.div`
 
 const NavLink = styled.div`
   font-family: "Quicksand", sans-serif;
-
+  cursor: pointer;
   // font-family: "Luckiest Guy", cursive;
   display: inline;
   font-size: 24px;
