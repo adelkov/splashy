@@ -6,6 +6,7 @@ export const ImageContext = React.createContext({});
 export const ImageProvider = ({ children }) => {
   const [images, setImages] = useState([]);
   const [favorites, setFavorites] = useState([]);
+  const [searchedImage, setSearchedImage] = useState([]);
 
   useEffect(() => {
     setFavorites(JSON.parse(localStorage.getItem("favorites")));
@@ -21,13 +22,12 @@ export const ImageProvider = ({ children }) => {
       }));
       setImages(images);
     };
-    // fetchImages();
+    fetchImages();
   }, []);
 
   const searchImage = async query => {
-    
     const { data } = await fetchSearchedImage(query);
-    setImages([{ url: data.urls.small }]);
+    setSearchedImage([{ url: data.urls.small, isFavorite: false }]);
   };
 
   const makeFavorite = url => {
@@ -51,10 +51,11 @@ export const ImageProvider = ({ children }) => {
         image.url === url ? { ...image, isFavorite: !image.isFavorite } : image
       )
     );
+    setSearchedImage([{...searchedImage[0], isFavorite: !searchedImage[0].isFavorite}])
   };
 
   return (
-    <ImageContext.Provider value={{ images, makeFavorite, favorites, searchImage }}>
+    <ImageContext.Provider value={{ images, makeFavorite, favorites, searchImage, searchedImage }}>
       {children}
     </ImageContext.Provider>
   );

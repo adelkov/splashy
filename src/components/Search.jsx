@@ -3,18 +3,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext, useState } from "react";
 import { Route } from "react-router-dom";
 import styled from "styled-components";
+import { tabs } from "../utils/constants";
 
 import { ImageContext } from "../providers/ImagesProvider";
 
 function Search() {
   const [query, setQuery] = useState("");
-
   const { searchImage } = useContext(ImageContext);
 
   const onSubmit = (e, history) => {
     e.preventDefault();
     searchImage(query);
-    history.push("/search");
+    history.push(tabs.SEARCH);
   };
 
   const updateQuery = e => {

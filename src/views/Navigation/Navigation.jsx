@@ -11,11 +11,11 @@ import { CustomThemeContext } from "../../providers/CustomThemeProvider";
 function Navigation() {
   useEffect(() => {
     setTabs(
-      tabs.map(tab => (
+      tabs.map(tab =>
         tab.url === window.location.pathname
           ? { ...tab, selected: true }
           : { ...tab, selected: false }
-      ))
+      )
     );
   }, []);
 
