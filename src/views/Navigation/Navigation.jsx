@@ -103,8 +103,7 @@ const NavLink = styled.div`
 `;
 
 const NightModeIcon = styled.div`
-@media (max-width: 600px) {
-  
-  display: none;
-}
-`
+  @media (max-width: 600px) {
+    display: none;
+  }
+`;

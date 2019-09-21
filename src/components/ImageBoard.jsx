@@ -3,13 +3,11 @@ import React from "react";
 import { Column, Favo, Heading, Image, ImageCard, Row } from "../design-system/primitives";
 import { divideImagesToColumns } from "../utils/utilities";
 
-function ImageBoard({ images, makeFavorite }) {
-  console.log(images)
+function ImageBoard({ images, toggleFavorite }) {
   if (images.length === 0) {
     return <Heading>No images to show! </Heading>;
   }
   
-
   return (
     <Row>
       {divideImagesToColumns(images).map((col, idx) => (
@@ -17,7 +15,7 @@ function ImageBoard({ images, makeFavorite }) {
           {images &&
             col.map((image, idx) => (
               <ImageCard
-                onClick={() => makeFavorite(image.url)}
+                onClick={() => toggleFavorite(image.url)}
                 key={image + idx}
               >
                 <Image src={image.url} alt={image.url} />

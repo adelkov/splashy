@@ -70,3 +70,4 @@ export const Heading = styled.h1`
   font-family: "Londrina Shadow", cursive;
   ${color}heading
 `;
+

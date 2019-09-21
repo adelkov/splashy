@@ -4,16 +4,23 @@ import { fetchLatestImages, fetchSearchedImage } from "../utils/api";
 export const ImageContext = React.createContext({});
 
 export const ImageProvider = ({ children }) => {
+  const NUMBER_OF_IMAGES_TO_FETCH = 24;
+
   const [images, setImages] = useState([]);
   const [favorites, setFavorites] = useState([]);
   const [searchedImage, setSearchedImage] = useState([]);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setFavorites(JSON.parse(localStorage.getItem("favorites")) || []);
+    fetchImages();
+  }, []);
 
-    const fetchImages = async () => {
-      const { data } = await fetchLatestImages(24);
-      const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+  const fetchImages = async () => {
+    setLoading(true);
+    try {
+      const { data } = await fetchLatestImages(NUMBER_OF_IMAGES_TO_FETCH);
       const images = data.map(image => ({
         url: image.urls.small,
         isFavorite: favorites.find(
@@ -21,20 +28,27 @@ export const ImageProvider = ({ children }) => {
         )
       }));
       setImages(images);
-    };
-    fetchImages();
-  }, []);
-
-  const searchImage = async query => {
-    const { data } = await fetchSearchedImage(query);
-    setSearchedImage([{ url: data.urls.small, isFavorite: false }]);
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const makeFavorite = url => {
-    let currentFavorites = JSON.parse(localStorage.getItem("favorites"));
-    if (!currentFavorites) {
-      currentFavorites = [];
+  const searchImage = async query => {
+    setLoading(true);
+    try {
+      const { data } = await fetchSearchedImage(query);
+      setSearchedImage([{ url: data.urls.small, isFavorite: false }]);
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
     }
+  };
+
+  const toggleFavorite = url => {
+    let currentFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
 
     let newFavorites;
     if (currentFavorites.find(fav => fav.url === url)) {
@@ -59,7 +73,15 @@ export const ImageProvider = ({ children }) => {
 
   return (
     <ImageContext.Provider
-      value={{ images, makeFavorite, favorites, searchImage, searchedImage }}
+      value={{
+        images,
+        toggleFavorite,
+        favorites,
+        searchImage,
+        searchedImage,
+        error,
+        loading
+      }}
     >
       {children}
     </ImageContext.Provider>
