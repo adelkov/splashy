@@ -4,7 +4,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { Route } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { color } from "styled-system";
-
 import Search from "../../components/Search";
 import { CustomThemeContext } from "../../providers/CustomThemeProvider";
 
@@ -22,8 +21,8 @@ function Navigation() {
   const { toggleMode, isDark } = useContext(CustomThemeContext);
 
   const initialTabs = [
-    { url: "/", title: "Gallery", selected: true },
-    { url: "/favorites", title: "Favorites", selected: false }
+    { url: "/", isSelected: false, title: "Gallery" },
+    { url: "/favorites", isSelected: false, title: "Favorites" }
   ];
   const [tabs, setTabs] = useState(initialTabs);
 

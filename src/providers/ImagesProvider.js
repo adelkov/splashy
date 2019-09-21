@@ -51,7 +51,7 @@ export const ImageProvider = ({ children }) => {
         image.url === url ? { ...image, isFavorite: !image.isFavorite } : image
       )
     );
-    setSearchedImage([{...searchedImage[0], isFavorite: !searchedImage[0].isFavorite}])
+    searchedImage.length === 0 || setSearchedImage([{...searchedImage[0], isFavorite: !searchedImage[0].isFavorite}])
   };
 
   return (
