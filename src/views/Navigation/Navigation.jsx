@@ -2,44 +2,66 @@ import React, { useContext, useState } from "react";
 import { DarkModeContext } from "../../providers/DarkModeProvider";
 import { Link } from "react-router-dom";
 import { ImageContext } from "../../providers/ImagesProvider";
-import styled from "styled-components";
-import { Heading, NavLink } from "../../design-system/primitives";
+import styled, { css } from "styled-components";
 import { color, border } from "styled-system";
-import Search from '../../components/Search'
+import Search from "../../components/Search";
 
 function Navigation() {
   const { toggleMode, isDark } = useContext(DarkModeContext);
 
+  const initialTabs = [
+    { url: "/", title: "Gallery", selected: true },
+    { url: "/favorites", title: "Favorites", selected: false }
+  ];
+  const [tabs, setTabs] = useState(initialTabs);
+
+  const selectTab = url => {
+    const updatedTabs = tabs.map(tab =>
+      tab.url === url ? { ...tab, selected: true } : { ...tab, selected: false }
+    );
+    setTabs(updatedTabs)
+  };
+
   const Toolbar = styled.div`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
-    padding: 12px;
+    overflow: hidden;
     ${color}
   `;
 
-
+  const NavLink = styled.div`
+    font-family: "Luckiest Guy", cursive;
+    float: left;
+    display: block;
+    ${color}
+    text-align: center;
+    text-decoration: none;
+    font-size: 26px;
+    padding: 30px 12px 20px 12px;
+    &:hover {
+      opacity: .4;
+    }
+    ${props =>
+      props.selected &&
+      css`
+        background: palevioletred;
+      `}
+  `;
 
   return (
     <Toolbar bg={"text"}>
       <div>
-        <NavLink color={"negtext"} border={1} borderColor={"text"}>
+        {tabs.map(tab => (
           <Link
-            to="/favorites"
-            style={{ textDecoration: "none", height: "100%" }}
+            to={tab.url}
+            style={{ textDecoration: "none" }}
+            onClick={() => selectTab(tab.url)}
           >
-            Favorites
+            <NavLink color={"negtext"} selected={tab.selected}>
+              {tab.title}
+            </NavLink>
           </Link>
-        </NavLink>
-
-        <Link to="/" style={{ textDecoration: "none" }}>
-          <NavLink color={"negtext"}>Gallery</NavLink>
-        </Link>
+        ))}
       </div>
-      <div>
-       <Search />
-      </div>
+      <Search />
       <div onClick={() => toggleMode()}>
         {isDark ? "TOGGLE ME DARK" : "TOGGLE ME LIGHT"}
       </div>
