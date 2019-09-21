@@ -52,13 +52,13 @@ function Navigation() {
           />
         ))}
       </div>
-      <div onClick={() => toggleMode()}>
+      <NightModeIcon onClick={() => toggleMode()}>
         {isDark ? (
           <FontAwesomeIcon icon={faMoon} color={"#303030"} size="2x" />
         ) : (
           <FontAwesomeIcon icon={faSun} color={"#dcdcdc"} size="2x" />
         )}
-      </div>
+      </NightModeIcon>
       <Search />
     </Toolbar>
   );
@@ -77,12 +77,15 @@ const Toolbar = styled.div`
   align-items: center;
   box-shadow: 0.3rem 0.4rem 0.4rem rgba(0, 0, 0, 0.4);
   ${color}
+  @media (max-width: 600px) {
+    flex-direction: column;
+    height: 120px;
+  }
 `;
 
 const NavLink = styled.div`
   font-family: "Quicksand", sans-serif;
   cursor: pointer;
-  // font-family: "Luckiest Guy", cursive;
   display: inline;
   font-size: 24px;
   padding-right: 20px;
@@ -90,6 +93,7 @@ const NavLink = styled.div`
   &:hover {
     opacity: 0.4;
   }
+
   ${color}
   ${props =>
     props.selected &&
@@ -97,3 +101,10 @@ const NavLink = styled.div`
       color: palevioletred;
     `}
 `;
+
+const NightModeIcon = styled.div`
+@media (max-width: 600px) {
+  
+  display: none;
+}
+`

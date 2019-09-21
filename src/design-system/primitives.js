@@ -8,6 +8,9 @@ export const GlobalStyle = createGlobalStyle`
     padding-top: 74px;
     margin: 0;
     ${color}
+    @media (max-width: 600px) {
+      padding-top: 140px;
+    }
   }
 `;
 
