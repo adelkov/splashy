@@ -8,16 +8,18 @@ import { ImageContext } from "../../providers/ImagesProvider";
 
 function Search() {
   const [query, setQuery] = useState("");
-  const { searchImage } = useContext(ImageContext);
+  const { searchImage, setError } = useContext(ImageContext);
 
   const onSubmit = (e, history) => {
     e.preventDefault();
+    setError(null)
     searchImage(query);
     history.push('/search');
   };
 
   const updateQuery = e => {
     setQuery(e.target.value);
+   
   };
 
   return (
