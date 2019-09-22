@@ -8,8 +8,8 @@ import {
   ImageCard,
   Row,
   CenteredConainer
-} from "../design-system/primitives";
-import { divideImagesToColumns } from "../utils/utilities";
+} from "../../design-system/primitives";
+import { divideImagesToColumns } from "../../utils/utilities";
 
 function ImageBoard({ images, toggleFavorite }) {
   if (images.length === 0) {

@@ -4,7 +4,7 @@ import React, { useContext, useState } from "react";
 import { Route } from "react-router-dom";
 import styled from "styled-components";
 
-import { ImageContext } from "../providers/ImagesProvider";
+import { ImageContext } from "../../providers/ImagesProvider";
 
 function Search() {
   const [query, setQuery] = useState("");

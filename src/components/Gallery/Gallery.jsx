@@ -1,12 +1,7 @@
-import React, { useContext, useEffect } from "react";
-
-import ImageBoard from "../../components/ImageBoard";
+import { CenteredConainer, Heading, LoadingSpinner } from "../../design-system/primitives";
 import { ImageContext } from "../../providers/ImagesProvider";
-import {
-  LoadingSpinner,
-  CenteredConainer,
-  Heading
-} from "../../design-system/primitives";
+import ImageBoard from "./ImageBoard";
+import React, { useContext, useEffect } from "react";
 
 function Gallery() {
   let imagesToRender;
@@ -31,6 +26,7 @@ function Gallery() {
       imagesToRender = favorites.slice();
       break;
     default:
+      imagesToRender = [];
       break;
   }
 

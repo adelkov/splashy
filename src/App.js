@@ -1,11 +1,11 @@
 import React from "react";
 import { Route, BrowserRouter as Router } from "react-router-dom";
 
+import  Gallery  from './components/Gallery/Gallery'
+import  Navigation  from './components/Navigation/Navigation'
 import { GlobalStyle } from "./design-system/primitives";
 import { CustomThemeProvider } from "./providers/CustomThemeProvider";
 import { ImageProvider } from "./providers/ImagesProvider";
-import Gallery from "./views/Gallery/Gallery";
-import Navigation from "./views/Navigation/Navigation";
 
 function App() {
 

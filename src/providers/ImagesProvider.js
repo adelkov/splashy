@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+
 import { fetchLatestImages, fetchSearchedImage } from "../utils/api";
 
 export const ImageContext = React.createContext({});
@@ -62,6 +63,7 @@ export const ImageProvider = ({ children }) => {
         image.url === url ? { ...image, isFavorite: !image.isFavorite } : image
       )
     );
+    
     searchedImage.length === 0 ||
       setSearchedImage([
         { ...searchedImage[0], isFavorite: !searchedImage[0].isFavorite }
