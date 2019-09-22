@@ -1,11 +1,25 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 
 import ImageBoard from "../../components/ImageBoard";
 import { ImageContext } from "../../providers/ImagesProvider";
+import {
+  LoadingSpinner,
+  CenteredConainer,
+  Heading
+} from "../../design-system/primitives";
 
 function Gallery() {
   let imagesToRender;
-  const { images, favorites, searchedImage, toggleFavorite, loading, error } = useContext(ImageContext);
+  const {
+    images,
+    favorites,
+    searchedImage,
+    toggleFavorite,
+    loading,
+    error,
+    setError
+  } = useContext(ImageContext);
+
   switch (window.location.pathname) {
     case "/":
       imagesToRender = images.slice();
@@ -20,16 +34,26 @@ function Gallery() {
       break;
   }
 
+  useEffect(() => {
+    return () => setError(null);
+  }, []);
+
   if (loading) {
     return (
-      <div>Loading...</div>
-    )
+      <CenteredConainer>
+        <LoadingSpinner />
+      </CenteredConainer>
+    );
   }
 
   if (error) {
     return (
-      <div>{error.message}</div>
-    )
+      <CenteredConainer>
+        <Heading color="red">
+          'Oops, there was something wrong with your request.'
+        </Heading>
+      </CenteredConainer>
+    );
   }
 
   return (

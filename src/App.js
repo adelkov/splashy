@@ -17,7 +17,7 @@ function App() {
             <GlobalStyle bg={"background"}/>
             <Navigation />
             <Route path="/" exact component={Gallery} />
-            <Route path="/search" exact component={Gallery} />
+            <Route path="/search"  component={Gallery} />
             <Route path="/favorites" component={Gallery} />
           </>
         </CustomThemeProvider>

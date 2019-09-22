@@ -14,26 +14,25 @@ export const ImageProvider = ({ children }) => {
 
   useEffect(() => {
     setFavorites(JSON.parse(localStorage.getItem("favorites")) || []);
+    const fetchImages = async () => {
+      setLoading(true);
+      try {
+        const { data } = await fetchLatestImages(NUMBER_OF_IMAGES_TO_FETCH);
+        const images = data.map(image => ({
+          url: image.urls.small,
+          isFavorite: favorites.find(
+            favorite => favorite.url === image.urls.small
+          )
+        }));
+        setImages(images);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
     fetchImages();
   }, []);
-
-  const fetchImages = async () => {
-    setLoading(true);
-    try {
-      const { data } = await fetchLatestImages(NUMBER_OF_IMAGES_TO_FETCH);
-      const images = data.map(image => ({
-        url: image.urls.small,
-        isFavorite: favorites.find(
-          favorite => favorite.url === image.urls.small
-        )
-      }));
-      setImages(images);
-    } catch (error) {
-      setError(error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const searchImage = async query => {
     setLoading(true);
@@ -48,13 +47,11 @@ export const ImageProvider = ({ children }) => {
   };
 
   const toggleFavorite = url => {
-    let currentFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
-
     let newFavorites;
-    if (currentFavorites.find(fav => fav.url === url)) {
-      newFavorites = currentFavorites.filter(fav => fav.url !== url);
+    if (favorites.find(fav => fav.url === url)) {
+      newFavorites = favorites.filter(fav => fav.url !== url);
     } else {
-      newFavorites = currentFavorites.concat({ url, isFavorite: true });
+      newFavorites = favorites.concat({ url, isFavorite: true });
     }
 
     localStorage.setItem("favorites", JSON.stringify(newFavorites));
@@ -80,6 +77,7 @@ export const ImageProvider = ({ children }) => {
         searchImage,
         searchedImage,
         error,
+        setError,
         loading
       }}
     >
