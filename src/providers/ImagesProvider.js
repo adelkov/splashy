@@ -14,14 +14,18 @@ export const ImageProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    setFavorites(JSON.parse(localStorage.getItem("favorites")) || []);
     const fetchImages = async () => {
       setLoading(true);
+
+      const favotitesFromLS =
+        JSON.parse(localStorage.getItem("favorites")) || [];
+      setFavorites(favotitesFromLS);
+
       try {
         const { data } = await fetchLatestImages(NUMBER_OF_IMAGES_TO_FETCH);
         const images = data.map(image => ({
           url: image.urls.small,
-          isFavorite: favorites.find(
+          isFavorite: favotitesFromLS.find(
             favorite => favorite.url === image.urls.small
           )
         }));
@@ -48,6 +52,21 @@ export const ImageProvider = ({ children }) => {
   };
 
   const toggleFavorite = url => {
+    updateCurrentFavorites(url);
+
+    setImages(
+      images.map(image =>
+        image.url === url ? { ...image, isFavorite: !image.isFavorite } : image
+      )
+    );
+
+    searchedImage.length === 0 ||
+      setSearchedImage([
+        { ...searchedImage[0], isFavorite: !searchedImage[0].isFavorite }
+      ]);
+  };
+
+  const updateCurrentFavorites = url => {
     let newFavorites;
     if (favorites.find(fav => fav.url === url)) {
       newFavorites = favorites.filter(fav => fav.url !== url);
@@ -56,18 +75,7 @@ export const ImageProvider = ({ children }) => {
     }
 
     localStorage.setItem("favorites", JSON.stringify(newFavorites));
-
     setFavorites(newFavorites);
-    setImages(
-      images.map(image =>
-        image.url === url ? { ...image, isFavorite: !image.isFavorite } : image
-      )
-    );
-    
-    searchedImage.length === 0 ||
-      setSearchedImage([
-        { ...searchedImage[0], isFavorite: !searchedImage[0].isFavorite }
-      ]);
   };
 
   return (
