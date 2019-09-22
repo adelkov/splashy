@@ -1,4 +1,8 @@
 export const divideImagesToColumns = images => {
+  if (images.length === 1) {
+    return [[], [images[0]], []]
+  }
+
   const columns = images.reduce(
     (acc, curr, idx) => {
       if (idx % 3 === 0) {
