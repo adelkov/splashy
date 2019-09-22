@@ -20,6 +20,7 @@ function ImageBoard({ images, toggleFavorite }) {
           {images &&
             col.map((image, idx) => (
               <ImageCard
+                id={image.url}
                 onClick={() => toggleFavorite(image.url)}
                 key={image + idx}
               >
